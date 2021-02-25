@@ -9,7 +9,6 @@ class Players:
     def init(self):
         self.add_player()
         self.fill_players()
-        self.set_teams()
 
 # Subject Functions
 
@@ -33,9 +32,6 @@ class Players:
         number_of_bots = 4 - len(self.players)
         for i in range(number_of_bots):        
             self.players.append(self.Player(f'Player {i + 1}', 0))
-
-    def set_teams(self):
-        random.shuffle(self.players)
         command = {
             'event':'players completed',
             'players': self.players
@@ -48,7 +44,7 @@ class Players:
             player_to_remove = int(input("Selecione um jogador para remover."))-1
             del(self.players[player_to_remove])
         except:
-            print("Não entend sua escolha.")
+            print("Não foi possível entender sua escolha.")
 
     def show_players(self):
         if len(self.players) > 0:

@@ -23,8 +23,8 @@ class Teams:
 # class Functions
 
     def take_players(self, players):
-        self.doubles.append(self.Team('Team A', players[:2]))
-        self.doubles.append(self.Team('Team B', players[2:]))
+        self.doubles.append(self.Team('Seu time', players[:2]))
+        self.doubles.append(self.Team('Adversário', players[2:]))
         
         for team in self.doubles:
             for player in team.players:
