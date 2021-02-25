@@ -1,3 +1,5 @@
+import random
+
 class Teams:
     def __init__(self):
         self.state = {'observers':[]}
@@ -23,9 +25,13 @@ class Teams:
 # class Functions
 
     def take_players(self, players):
-        self.doubles.append(self.Team('Seu time', players[:2]))
-        self.doubles.append(self.Team('Adversário', players[2:]))
-        
+        team_a = players[:2]
+        team_b = players[2:]
+        random.shuffle(team_a)
+        random.shuffle(team_b)
+        self.doubles.append(self.Team('Seu time', team_a))
+        self.doubles.append(self.Team('Adversário', team_b))
+        random.shuffle(self.doubles)
         for team in self.doubles:
             for player in team.players:
                 player.name = f'{player.name} ({team.name.upper()})'
@@ -33,8 +39,6 @@ class Teams:
     def clean_rounds(self):
         self.rounds = 0
         self.ties = 0
-        #for team in self.doubles:
-        #    team.won['rounds'] = 0
             
     def clean_hands(self):
         for team in self.doubles:
