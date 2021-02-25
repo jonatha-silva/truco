@@ -30,8 +30,8 @@ class GameRules:
 
     def show_info(self):
         print("-----------------------------------------------")
-        print(f" Mãos: Time A ({self.doubles[0].won['hands']} x {self.doubles[1].won['hands']}) Time B")
-        print(f" Rodadas: Time A ({self.doubles[0].won['rounds']} x {self.doubles[1].won['rounds']}) Time B")
+        print(f" Mãos: {self.doubles[0].name} ({self.doubles[0].won['hands']} x {self.doubles[1].won['hands']}) {self.doubles[1].name}")
+        print(f" Rodadas: {self.doubles[0].name} ({self.doubles[0].won['rounds']} x {self.doubles[1].won['rounds']}) {self.doubles[1].name}")
         print(f" Rodada atual: {self.round}")
         if self.vira != None:
             print(f" Vira: {self.vira.nome}")
@@ -136,7 +136,7 @@ class GameRules:
 
     def have_game_winner(self):
         game_winner = [team for team in self.doubles if team.won['hands'] >= 3]
-        if len(game_winner) > 0:
+        if len(game_winner) > 0 and game_winner[0].name == 'Seu time':
             game_winner[0].won['games'] += 1
             print(f"\nParabéns! {game_winner[0].name} venceu o jogo.\n")
             print("       ___________      ")
@@ -149,5 +149,25 @@ class GameRules:
             print("           ) (          ")
             print("         _.' '._        ")
             print("        '-------'       ")
+            return True
+        elif len(game_winner) > 0 and game_winner[0].name != 'Seu time':
+            game_winner[0].won['games'] += 1
+            print("Não foi dessa vez, o adversario venceu!")
+            print("    _______________         ")
+            print("   /               \        ")
+            print("  /                 \       ")
+            print("//                   \/\    ")
+            print("\|   XXXX     XXXX   | /    ")
+            print(" |   XXXX     XXXX   |/     ")
+            print(" |   XXX       XXX   |      ")
+            print(" |                   |      ")
+            print(" \__      XXX      __/      ")
+            print("   |\     XXX     /|        ")
+            print("   | |           | |        ")
+            print("   | I I I I I I I |        ")
+            print("   |  I I I I I I  |        ")
+            print("   \_             _/        ")
+            print("     \_         _/          ")
+            print("       \_______/            ")
             return True
         return False
