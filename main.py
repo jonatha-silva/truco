@@ -37,7 +37,7 @@ def start_game():
         while not game.have_hand_winner():
             clear_output(1)
             game.show_info()
-            teams.player_turn()
+            teams.player_turn(game.rodada)
             game.have_round_winner()
             clear_output(5)
 

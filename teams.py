@@ -44,11 +44,11 @@ class Teams:
         for team in self.doubles:
             team.won['hands'] = 0
 
-    def player_turn(self):
+    def player_turn(self, rodada):
         for i in range(2):
             for team in self.doubles:
                 player = team.players[i]
-                choice = player.select_choice()
+                choice = player.select_choice(rodada)
                 carta = player.cards[choice['card']]
                 
                 if choice['action'] == 'play':

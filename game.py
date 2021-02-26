@@ -28,6 +28,10 @@ class GameRules:
 
 # Apresentação
 
+    @property
+    def rodada(self):
+        return self.round
+
     def show_info(self):
         print("-----------------------------------------------")
         print(f" Mãos: {self.doubles[0].name} ({self.doubles[0].won['hands']} x {self.doubles[1].won['hands']}) {self.doubles[1].name}")
