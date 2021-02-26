@@ -29,8 +29,8 @@ class Teams:
         team_b = players[2:]
         random.shuffle(team_a)
         random.shuffle(team_b)
-        self.doubles.append(self.Team('Seu time', players[:2]))
-        self.doubles.append(self.Team('Adversário', players[2:]))
+        self.doubles.append(self.Team('Seu time', team_a))
+        self.doubles.append(self.Team('Adversário', team_b))
         random.shuffle(self.doubles)
         for team in self.doubles:
             for player in team.players:
@@ -39,18 +39,16 @@ class Teams:
     def clean_rounds(self):
         self.rounds = 0
         self.ties = 0
-        #for team in self.doubles:
-        #    team.won['rounds'] = 0
             
     def clean_hands(self):
         for team in self.doubles:
             team.won['hands'] = 0
 
-    def player_turn(self):
+    def player_turn(self, rodada):
         for i in range(2):
             for team in self.doubles:
                 player = team.players[i]
-                choice = player.select_choice()
+                choice = player.select_choice(rodada)
                 carta = player.cards[choice['card']]
                 
                 if choice['action'] == 'play':

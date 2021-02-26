@@ -71,9 +71,9 @@ class Players:
             self.playable = playable
 
 
-        def select_choice(self):
+        def select_choice(self, rodada):
             if self.playable == 1:
-                self.show_choices()
+                self.show_choices(rodada)
                 
                 valid_choice = False
 
@@ -86,8 +86,7 @@ class Players:
                     elif your_choice == 9:
                         print("Truco!")
 
-                    elif your_choice == 8:
-                        print("Hide card!")
+                    elif your_choice == 8 and rodada > 1:
                         your_choice = int(input(f"{self.name} Selecione uma carta para esconder: "))
                         
                         if your_choice-1 in range(len(self.cards)):
@@ -103,12 +102,13 @@ class Players:
             
             return choice
             
-        def show_choices(self):
+        def show_choices(self, rodada):
             print("\n-----------------------------------------------")
             for index, card in zip(range(len(self.cards)), self.cards):
                 print(f"Opção {index + 1 }: {card.nome}")
             print('')
-            print(f'Opção 8: Esconder')
+            if rodada > 1:
+                print(f'Opção 8: Esconder')
             print(f'Opção 9: Truco!')
             print("-----------------------------------------------\n")
 
