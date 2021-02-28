@@ -7,6 +7,7 @@ class Mesa:
         self.estado = dict(observadores=[])
         self.__jogadores = []
         self.__equipes = []
+        self.__cartas_na_mesa = []
 
     def inscrever(self, observador):
         self.estado['observadores'].append(observador)
@@ -17,18 +18,21 @@ class Mesa:
 
     def preencher_jogadores(self):
         self.__jogadores.extend([
-            Jogador('Você', 1),
+            Jogador('Jonatha', 1),
             Jogador('Pedro'),
             Jogador('Letícia'),
             Jogador('João')
         ])
 
     def formar_times(self):
-        random.shuffle(self.__jogadores)
         self.__equipes.extend([
-            Equipe('Seu time', self.__jogadores[2:]),
-            Equipe('Time Adversário', self.__jogadores[:2])
+            Equipe('Seu time', self.__jogadores[:2]),
+            Equipe('Time Adversário', self.__jogadores[2:])
         ])
+        for equipe in self.__equipes:
+            equipe.estampar_equipe()
+            equipe.reorganizar_integrantes()
+        random.shuffle(self.__equipes)
 
     def iniciar_mao(self):
         for jogador in self.__jogadores:
@@ -41,27 +45,53 @@ class Mesa:
             ordem = comando['ordem']
             self.__jogadores[ordem].receber_carta(comando['carta'])
 
-    def iniciar_rodada(self):
+    def iniciar_rodada(self, rodada):
+        self.__cartas_na_mesa = []
+        self.__solicitar_acao(rodada)
+
+    def __solicitar_acao(self, rodada):
+        primeiro = True
         for integrante in range(2):
             for equipe in self.__equipes:
-                jogador = equipe.mostrar_integrante(integrante)
-                escolha = jogador.selecionar_acao(rodada=1)
-                
-                if escolha['acao'] == 'jogar':
-                    carta = jogador.retornar_carta(escolha['carta'])
-                    print(f" > {jogador.nome} jogou a carta {carta.nome}.")
+                jogador = equipe.mostrar_integrante(integrante)                
+                if jogador.jogavel == 1:
                     comando = dict(
-                        evento='carta de jogador',
-                        carta= carta,
-                        jogador= jogador,
-                        equipe= equipe
+                        evento="tela de ações",
+                        rodada=rodada,
+                        cartas=jogador.mostrar_cartas(),
+                        primeiro=primeiro
                     )
                     self.notificar(comando)
+                    escolha = jogador.selecionar_acao(rodada)
+                else:
+                    escolha = dict(acao="jogar", carta=0)
+                self.__executar_acao(equipe, jogador, escolha)
+            primeiro = False
 
-                elif escolha['acao'] == 'esconder':
-                    carta = jogador.retornar_carta(escolha['carta'])
-                    print(f' > {jogador.nome} escondeu a carta.')
+    def __executar_acao(self, equipe, jogador, escolha):
+        carta = jogador.retornar_carta(escolha['carta'])
+        comando = dict(
+            evento='nova carta na mesa',
+            equipe=equipe,
+            jogador=jogador,
+            carta=carta,    
+            estado=escolha['acao']
+        )
+        self.__adicionar_cartas_na_mesa(comando)
+        self.notificar(comando)
 
+    def __adicionar_cartas_na_mesa(self, comando:dict):
+        self.__cartas_na_mesa.append(dict(
+            jogador=comando['jogador'],
+            carta=comando['carta'],
+            estado=comando['estado']
+        ))
+        comando = dict(
+            evento="cartas na mesa",
+            jogadas=self.__cartas_na_mesa
+        )
+        self.notificar(comando)
+        
     def retornar_equipes(self):
         return self.__equipes
 

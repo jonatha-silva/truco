@@ -16,6 +16,13 @@ class Jogador:
     def nome(self):
         return self.__nome
 
+    @property
+    def jogavel(self):
+        return self.__jogavel
+
+    def mostrar_cartas(self):
+        return self.__cartas
+
     def soltar_cartas(self):
         self.__cartas = []
 
@@ -29,26 +36,16 @@ class Jogador:
         if len(self.__cartas) == 0:
             print("O jogador não tem cartas para escolher.")
             return False
-        elif self.__jogavel == 1:
-            self.__mostrar_acoes(rodada)            
+        else:
             escolha_valida = False
             while not escolha_valida:
                 decisao:int = self.__tomar_decisao()
                 escolha = self.__validar_escolha(decisao, rodada)
                 escolha_valida = escolha != False
-        else:
-            escolha = dict(acao="jogar", carta=0)
         return escolha
 
-    def __mostrar_acoes(self, rodada):
-        print("\n-----------------------------------------------")
-        for carta in enumerate(self.__cartas):
-            print(f"Opção {carta[0] }: {carta[1].nome}")
-        print('')
-        if rodada > 1:
-            print(f'Opção 8: Esconder')
-        print(f'Opção 9: Truco!')
-        print("-----------------------------------------------\n")
+    def estampar_equipe(self, equipe):
+        self.__nome = f'{self.__nome} ({equipe})'
 
     def __tomar_decisao(self, acao='Jogar') -> int:
         if acao == 'esconder':

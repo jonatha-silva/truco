@@ -41,12 +41,15 @@ class GameRules:
 
 # Verificação de melhor carta
 
-    def verificar_carta(self, comando):
+    def nova_carta_na_mesa(self, comando):
 
-        if comando['evento'] == 'carta de jogador':
-            carta = comando['carta']
-            jogador = comando['jogador']
-            equipe = comando['equipe']
+        if comando['evento'] == 'nova carta na mesa' and comando['estado'] == 'jogar':
+            self.verificar_carta(comando)
+
+    def verificar_carta(self, comando):
+        carta = comando['carta']
+        jogador = comando['jogador']
+        equipe = comando['equipe']
 
         # Put my card if don't have card in the table
         if self.maiorCarta == None:

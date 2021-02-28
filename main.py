@@ -1,14 +1,8 @@
-import os
-import time
 from mesa import Mesa
 from baralho import Baralho
 from render import Render
-from src.jogos import Truco
 from game import GameRules
-
-def clear_output(time_value):
-    time.sleep(time_value)
-    os.system('cls' if os.name == 'nt' else 'clear')
+from src.jogos import Truco
 
 # Objects
 baralho = Baralho(Truco)
@@ -16,26 +10,28 @@ mesa = Mesa()
 game = GameRules(mesa.retornar_equipes())
 render = Render(mesa, game)
 
-# Subscribes
+# Inscritos
 baralho.inscrever(game.receber_vira)
 baralho.inscrever(mesa.distribuir_cartas)
-mesa.inscrever(game.verificar_carta)
+mesa.inscrever(game.nova_carta_na_mesa)
+mesa.inscrever(render.tela_de_jogadas)
+mesa.inscrever(render.tela_de_acoes)
 
-# Game
+# Jogo
 def iniciar_jogo():
     mesa.preencher_jogadores()
     mesa.formar_times()
     baralho.criar_baralho()
     while not game.have_game_winner():
-        clear_output(1)
+        render.limpar(1)
         mesa.iniciar_mao()
         game.clear_round()
         baralho.pegar_baralho()
         baralho.enviar_cartas()
         baralho.enviar_vira()
         while not game.have_hand_winner():
-            clear_output(1)
-            render.apresentar_infos()
-            mesa.iniciar_rodada()
+            mesa.iniciar_rodada(game.rodada)
             game.have_round_winner()
-            clear_output(5)
+            render.limpar(5)
+
+iniciar_jogo()
