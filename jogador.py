@@ -22,11 +22,8 @@ class Jogador:
     def receber_carta(self, carta):
         self.__cartas.append(carta)
 
-    def ver_carta(self, carta):
-        return self.__cartas[carta]
-
-    def enviar_carta(self, carta):
-        return self.__cartas.pop(carta)
+    def retornar_carta(self, escolha):
+        return self.__cartas.pop(escolha)
 
     def selecionar_acao(self, rodada):
         if len(self.__cartas) == 0:
@@ -45,8 +42,8 @@ class Jogador:
 
     def __mostrar_acoes(self, rodada):
         print("\n-----------------------------------------------")
-        for index, carta in zip(range(len(self.__cartas)), self.__cartas):
-            print(f"Opção {index + 1 }: {carta.__nome}")
+        for carta in enumerate(self.__cartas):
+            print(f"Opção {carta[0] }: {carta[1].nome}")
         print('')
         if rodada > 1:
             print(f'Opção 8: Esconder')

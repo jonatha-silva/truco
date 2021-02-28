@@ -4,9 +4,9 @@ from equipe import Equipe
 
 class Mesa:
     def __init__(self):
+        self.estado = dict(observadores=[])
         self.__jogadores = []
         self.__equipes = []
-        self.estado = dict(observadores=[])
 
     def inscrever(self, observador):
         self.estado['observadores'].append(observador)
@@ -45,11 +45,10 @@ class Mesa:
         for integrante in range(2):
             for equipe in self.__equipes:
                 jogador = equipe.mostrar_integrante(integrante)
-                escolha = jogador.selecionar_acao(1)
-                carta = jogador.ver_carta(escolha['carta'])
-                jogador.enviar_carta(carta)
+                escolha = jogador.selecionar_acao(rodada=1)
                 
                 if escolha['acao'] == 'jogar':
+                    carta = jogador.retornar_carta(escolha['carta'])
                     print(f" > {jogador.nome} jogou a carta {carta.nome}.")
                     comando = dict(
                         evento='carta de jogador',
@@ -60,7 +59,11 @@ class Mesa:
                     self.notificar(comando)
 
                 elif escolha['acao'] == 'esconder':
+                    carta = jogador.retornar_carta(escolha['carta'])
                     print(f' > {jogador.nome} escondeu a carta.')
 
     def retornar_equipes(self):
         return self.__equipes
+
+    def equipe(self, equipe:int):
+        return self.__equipes[equipe]

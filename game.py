@@ -25,15 +25,6 @@ class GameRules:
     def rodada(self):
         return self.round
 
-    def show_info(self):
-        print("-----------------------------------------------")
-        print(f" Mãos: {self.doubles[0].nome} ({self.doubles[0].mostrar_vitorias('mãos')} x {self.doubles[1].mostrar_vitorias('mãos')}) {self.doubles[1].nome}")
-        print(f" Rodadas: {self.doubles[0].nome} ({self.doubles[0].mostrar_vitorias('rodadas')} x {self.doubles[1].mostrar_vitorias('rodadas')}) {self.doubles[1].nome}")
-        print(f" Rodada atual: {self.round}")
-        if self.vira != None:
-            print(f" Vira: {self.vira.nome}")
-        print("-----------------------------------------------\n")
-
 # Limpeza de informações
 
     def clear_table(self):
@@ -130,15 +121,15 @@ class GameRules:
         
         if len(hand_winner) > 0:
             hand_winner[0].adicionar_vitoria('mãos', 1)
-            print(f"{hand_winner[0].name} venceu a mão.\n")
+            print(f"{hand_winner[0].nome} venceu a mão.\n")
             return True
         return False
 
     def have_game_winner(self):
         game_winner = [team for team in self.doubles if team.mostrar_vitorias('mãos') >= 3]
-        if len(game_winner) > 0 and game_winner[0].name == 'Seu time':
+        if len(game_winner) > 0 and game_winner[0].nome == 'Seu time':
             game_winner[0].adicionar_vitoria('jogos', 1)
-            print(f"\nParabéns! {game_winner[0].name} venceu o jogo.\n")
+            print(f"\nParabéns! {game_winner[0].nome} venceu o jogo.\n")
             print("       ___________      ")
             print("      '._==_==_=_.'     ")
             print("      .-\\:      /-.    ")
