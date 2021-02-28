@@ -4,11 +4,11 @@ class Equipe:
     def __init__(self, nome:str, integrantes:list):
         self.__nome = nome
         self.__integrantes = integrantes
-        self.__vitorias = {
-                'jogos': 0,
-                'mãos': 0,
-                'rodadas': 0
-            }
+        self.__vitorias = dict(
+                jogos = 0,
+                mãos =  0,
+                rodadas =  0
+        )
 
     @property
     def nome(self):

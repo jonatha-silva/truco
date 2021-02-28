@@ -7,7 +7,7 @@ class Baralho:
         self.__estado = dict(observadores=[])
         self.__jogo = jogo()
         self.__cartas = []
-        self.baralho = []
+        self.__baralho = []
     
     def inscrever(self, observador):
         self.__estado['observadores'].append(observador)
@@ -15,6 +15,10 @@ class Baralho:
     def notificar(self, command):
         for observer_function in self.__estado['observadores']:
             observer_function(command)
+
+    @property
+    def baralho(self):
+        return self.__baralho
 
     def criar_baralho(self):
         valores = self.__jogo.GerarCartas()
@@ -24,12 +28,12 @@ class Baralho:
                 self.__cartas.append(carta)
 
     def pegar_baralho(self):
-        self.baralho = list(self.__cartas)
+        self.__baralho = list(self.__cartas)
 
     def pegar_carta(self):
-        if len(self.baralho) > 0:
-            carta_aleatoria = random.randint(0, len(self.baralho)-1)
-            return self.baralho.pop(carta_aleatoria)
+        if len(self.__baralho) > 0:
+            carta_aleatoria = random.randint(0, len(self.__baralho)-1)
+            return self.__baralho.pop(carta_aleatoria)
         else:
             print("Não há cartas suficientes no baralho, EMBARALHE!")
 

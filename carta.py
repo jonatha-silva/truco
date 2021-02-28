@@ -2,7 +2,7 @@ class Carta:
     def __init__(self, posicao, naipe):
         self.__posicao = posicao
         self.__naipe = naipe
-        self.__nome = f'{posicao.name} de {naipe.name}'
+        self.__nome = f'{posicao.name} DE {naipe.name}'
 
     @property
     def nome(self):

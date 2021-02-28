@@ -10,8 +10,6 @@ class GameRules:
         self.round = 1
         self.doubles = doubles
 
-# Subject Functions
-
     def inscrever(self, observer_function):
         self.state['observers'].append(observer_function)
 
@@ -19,13 +17,9 @@ class GameRules:
         for observer_function in self.state['observers']:
             observer_function(command)
 
-# Apresentação
-
     @property
     def rodada(self):
         return self.round
-
-# Limpeza de informações
 
     def clear_table(self):
         self.vira = None
@@ -38,8 +32,6 @@ class GameRules:
         if comando['evento'] == 'Vira':
             self.manilhas = comando['manilhas']
             self.vira = comando['vira']
-
-# Verificação de melhor carta
 
     def nova_carta_na_mesa(self, comando):
 
@@ -89,8 +81,6 @@ class GameRules:
             self.maiorCarta = carta
             self.card_of_team = None
             self.card_of_player = None       
-
-# Verificação de vitória
 
     def have_round_winner(self):
 
